@@ -1,0 +1,92 @@
+﻿@model WebUI.Models.AddImageViewModel
+@{
+    ViewBag.Title = "AddImageOnPhotobook";
+    Layout = "~/Views/Photobook/_PhotobookLayout.cshtml";
+
+
+}
+
+<h2>Add Image on Photobook</h2>
+
+@using (Html.BeginForm("AddImageOnPhotobook", "Photobook", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary()
+
+    @Html.HiddenFor(i => i.Image.ProfileId)
+
+    <div class="form-group col-md-4 pull-right">
+        <label>Select Photobook:</label>
+        @Html.DropDownListFor(m => m.Image.PhotobookId, Model.SelectListPhotobook, new { @class = "form-control text-center" })
+    </div>
+
+
+    <div class="form-group col-md-4 pull-left">
+        <label style="visibility:hidden">Select File:</label>
+        <input id="fileInput" type="file" name="uploadImage" multiple accept="image/*" style="display:none;" onchange="processFiles(this.files)" />
+        <button type="button" class="btn btn-primary form-control" onclick="showFileInput()">File Input...</button>
+    </div>
+
+    <div class="form-group col-md-4">
+        <label style="visibility:hidden">Confirm upload:</label>
+        <button type="submit" class="btn btn-success form-control hidden">Submit upload Image</button>
+    </div>
+    
+    <div id="outputImageBox" class="col-md-12 hidden">
+        <div class="section">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="text-center">Upload <span></span> items</h1>
+                    </div>
+                </div>
+
+                <div id="manyImage" class="row">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+   
+}
+
+<script>
+
+    //срабатывание <a> для input
+    function showFileInput() {
+        var fileInput = document.getElementById("fileInput");
+        fileInput.click();
+    }
+
+    function processFiles(files) {
+
+        $("#manyImage").html("");
+
+        for (var i = 0; i < files.length; i++) {
+
+            var file = files[i];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var result = e.target.result;
+                //$("#manyImage").prepend('<img id="image' + i + '" src="" alt="image' + i + ' not load" class="img-responsive"/>');
+                //$("#image" + i).attr({ src: result, alt: "image" });
+                $("#manyImage").prepend('<div  class="col-md-4"><a><img id="image' + i + '" src="" alt="image' + i + ' not load" class="img-responsive"/> </a><br /></div>');
+                $("#image" + i).attr({ src: result});
+            };
+            reader.readAsDataURL(file);
+        }
+
+        $("h1 span").html(files.length)
+
+        $("button[type=submit]").removeClass("hidden");
+        $("#outputImageBox").removeClass("hidden");
+
+    }
+
+</script>

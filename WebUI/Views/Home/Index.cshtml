@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = null;
+
+}
+
+@Html.Partial("_MessageError")
+
+<div class="text-center">
+
+    <h2>Welcome to SSN</h2>
+
+    <h4>now SSN have</h4>
+
+    @ViewBag.ProfilesCount
+    @ViewBag.UsersCount 
+    @ViewBag.ImagesCount
+    @ViewBag.PhotobooksCount
+
+
+
+    <h4>Also...</h4>
+
+    <p>We can create and edit your Profie</p>
+    <p>Add and Remove Profiles on Friends List</p>
+    <p>Send Messages to other Profiles</p>
+    <p>Create News and Add Comments for him</p>
+    <p>Upload Images and Check Likes</p>
+
+</div>

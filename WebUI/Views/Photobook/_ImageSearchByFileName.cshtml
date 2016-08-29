@@ -1,0 +1,21 @@
+﻿@model Guid
+
+@*<form method="get" action="">
+    <input type="hidden" value="@Model" name="PhotobookId" />
+    <input type="text" name="searchByFileName" />
+    <input type="submit" name="search" value="searchByFileName" />
+</form>*@
+
+<div class="row">
+    <div class="col-sm-12 col-sm-offset-0">
+        <form method="get" action="">
+            <div class="input-group">
+                <input type="hidden" value="@Model" name="PhotobookId" />
+                <input type="text" name="searchByFileName" class="form-control" />
+                <span class="input-group-btn">
+                    <button class="btn btn-default" name="search" type="submit">Search By FileName!</button>
+                </span>
+            </div>
+        </form>
+        </div>
+</div>

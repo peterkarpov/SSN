@@ -1,0 +1,89 @@
+﻿@model Domain.Entities.News
+
+<li class="media">
+    <a class="pull-left" href="@(Url.RouteUrl(new
+                                                  {
+                                                      controller = "Profile",
+                                                      action = "ShowOne",
+                                                      ProfileId = Model.ProfileId
+                                                  }))">
+        <img class="media-object" height="64" width="64" src="@Url.Action("GetImage", "Image",
+                                                             new { ImageId = Model.Profile.AvatarImageId })">
+    </a>
+
+    <div class="media-body">
+
+        <a href="@(Url.RouteUrl(new
+                                    {
+                                        controller = "Profile",
+                                        action = "ShowOne",
+                                        ProfileId = Model.ProfileId
+                                    }))">
+
+            <h4 class="media-heading">@Model.Profile.fName</h4>
+        </a>
+
+
+
+        <p>
+            @Model.theme
+        </p>
+        <i>@Model.creationTime.ToString("d MMM HH:mm")</i>
+
+
+        <span>|</span>
+
+        @Html.RouteLink("open", new
+        {
+            controller = "News",
+            action = "ShowOneNews",
+            NewsId = Model.NewsId,
+            returnUrl = Request.Url.PathAndQuery
+        })
+
+        @if ((User.Identity.IsAuthenticated ? User.Identity.Name.Split('|')[1] : null) == Model.ProfileId.ToString())
+        {
+            <span>|</span>
+            @Html.ActionLink("delete", "DeleteNews", new { NewsId = Model.NewsId, returnUrl = Request.Url.PathAndQuery })
+        }
+
+        <div class="pull-right">
+            @Html.Partial("~/Views/Like/_LikeBar.cshtml", Model.NewsId)
+        </div>
+
+
+
+
+
+
+        @Html.Action("AddComment", "Comments", new { TargetId = Model.NewsId, returnUrl = Request.Url.PathAndQuery })
+
+
+
+        <div id="@Model.NewsId.ToString()">
+
+
+            @*@if (Model.Comments.Count() > 3)
+            {*@
+                <div class="ajaxLink">
+
+                    @Ajax.ActionLink("See All Comments", "CommentsOnTarget", "Comments",
+                                             new { TargetId = Model.NewsId },
+                                             new AjaxOptions
+                                             {
+                                                 UpdateTargetId = Model.NewsId.ToString(),
+
+                                                 Url = Url.Action("CommentsOnTarget", "Comments",
+                                                 new { TargetId = Model.NewsId }),
+
+                                             },
+                                             new { @class = "btn btn-block btn-link" })
+                </div>
+            @*}*@
+
+            @Html.Action("CommentsOnTarget", "Comments", new { TargetId = Model.NewsId, commentsCount = 3 })
+        </div>
+
+    </div>
+</li>
+

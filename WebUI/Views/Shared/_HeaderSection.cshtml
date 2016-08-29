@@ -1,0 +1,44 @@
+﻿<div class="navbar navbar-default navbar-inverse navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="@Url.Action("Index", "Home")" class="navbar-brand">SSN</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+            <ul class="nav navbar-nav navbar-right">
+
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <li>
+                        @Html.ActionLink("Registration", "Registration", "Authentication", new { returnUrl = Request.Url.PathAndQuery }, null)
+                    </li>
+                    <li>
+                        @*@Html.ActionLink("Sign In", "SignIn", "Authentication", new { returnUrl = Request.Url.PathAndQuery })*@
+
+                        <a class="btn btn-link" data-toggle="modal" data-target="#mSignIn">Sign In</a>
+
+                    </li>
+                }
+                else
+                {
+
+                    <li>
+                        @Html.RouteLink("Edit User", new { Controller = "Authentication", Action = "UserEdit", login = User.Identity.Name.Split('|')[0], returnUrl = Request.Url.PathAndQuery })
+                    </li>
+
+                    <li>
+                        @Html.ActionLink("Sign Out", "SignOut", "Authentication")
+                    </li>
+                }
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+@Html.Partial("~/Views/Authentication/_m_SignIn.cshtml", new WebUI.Models.AuthenticationViewModel())

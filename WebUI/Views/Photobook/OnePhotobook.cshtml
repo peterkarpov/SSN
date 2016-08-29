@@ -1,0 +1,49 @@
+﻿@using WebUI.HtmlHelpers
+@model WebUI.Models.PhotobookViewModel
+@{
+    ViewBag.Title = "One Photobook";
+    Layout = "~/Views/Photobook/_PhotobookLayout.cshtml";
+
+
+    
+}
+
+@Html.Partial("_MessageError")
+
+<div class="pull-right" style="margin-top:10px;">
+    @Html.Action("SelectPhotobookOnProfile", "Photobook", new { ProfileId = Model.Profile.ProfileId })
+</div>
+
+<h2>Photobook Title: @Model.Photobooks.First().Title</h2>
+
+
+
+
+<p>Autor this Photobook: @Model.Profile.fName</p>
+
+<a href="#" onclick="anichange('#OpenSearchOptions'); return false">Open Search Options</a>
+<div id="OpenSearchOptions" style="display: none">
+    @Html.Partial("_ImageSearchByFileName", Model.Photobooks.First().PhotobookId)
+</div> 
+
+
+<div id="itemVisibleBody">
+    <div id="itemVisibleSmall">
+        @Html.Partial("_ImageListSmall", Model.Images)
+    </div>
+    <div id="itemVisibleBig" class="hidden">
+        @Html.Partial("_ImageListBig", Model.Images)
+    </div>
+    <div id="itemVisibleGallery" class="hidden">
+        <span>VIEW ON GALLERY @Model.Images.Count()</span>
+    </div>
+</div>
+
+@if (User.Identity.Name.Split('|')[1] == Model.Photobooks.First().ProfileId.ToString())
+{
+    @Html.ActionLink("Add Image On Photobook", "AddImageOnPhotobook", new { PhotobookId = Model.Photobooks.First().PhotobookId })
+}
+
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("OnePhotobook", new { page = x, PhotobookId = Model.Photobooks.First().PhotobookId }))
+</div>

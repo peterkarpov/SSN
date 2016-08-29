@@ -1,0 +1,49 @@
+﻿@model WebUI.Models.MessagesViewModel
+@{
+    ViewBag.Title = "Talks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    
+}
+
+<h2>Talks</h2>
+
+<p>Talks of Profile: @Model.Profile.fName</p>
+<p>You have @Model.Talks.Count() talk(s)</p>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <tbody>
+                @foreach (var talk in Model.Talks)
+                {
+                    <tr class="@(WebUI.Infrastructure.NotificationRepository.GetNotyfyCount(forProfileId: (Guid)Model.Profile.ProfileId, TargetId: talk.TalkId, nType: WebUI.Infrastructure.Notification.NotificationType.Message) > 0 ? "info" : "")">
+                        <td class="col-md-3">
+                            <a class="pull-right hidden-xs" href="@(Url.RouteUrl(new
+                                   {
+                                       controller = "Profile",
+                                       action = "ShowOne",
+
+                                       ProfileId = Model.Profile.ProfileId != talk.Profile1Id ? talk.Profile1Id : talk.Profile2Id
+                                    }))">
+                                <img class="media-object" src="@Url.Action("GetImage", "Image", new { ImageId = (Model.Profile.ProfileId != talk.Profile1Id ? talk.Profile1 : talk.Profile2).AvatarImageId })" height="64" width="64">
+                            </a>
+                        </td>
+                        <td class="col-md-6">
+                            <h4 class="media-heading text-primary">to: @(Model.Profile.ProfileId != talk.Profile1Id ? talk.Profile1.fName : talk.Profile2.fName)</h4>
+                            <i>Contains @talk.Messages.Count() message(s)</i>
+                            <p>
+                                <b>@talk.Messages.OrderBy(t => t.creationTime).Last().ProfileFrom.fName:</b> @talk.Messages.OrderBy(t => t.creationTime).Last().text
+                            </p>
+                            @Html.ActionLink("Open", "OneTalk", new { TalkId = talk.TalkId })
+                        </td>
+                        <td class="col-md-3">
+                            <small class="pull-right">@talk.Messages.OrderBy(t => t.creationTime).Last().creationTime.ToString("dd MMM yyyy HH:mm")</small>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+﻿@model Domain.Entities.News
+
+@{
+    ViewBag.Title = "CreateNews";
+    Layout = "~/Views/News/_NewsLayout.cshtml";
+}
+
+<h2>CreateNews</h2>
+
+
+
+<div class="col-md-8 col-md-offset-1">
+
+    <p>Autor: @ViewBag.AutorName</p>
+
+    @using (Html.BeginForm("CreateNews", "News", FormMethod.Post))
+    {
+        @Html.ValidationSummary()
+
+        @*@Html.EditorForModel()*@
+
+        @Html.HiddenFor(n => n.NewsId)
+
+        @Html.HiddenFor(p => p.ProfileId)
+
+        <div class="form-group">
+            @Html.TextAreaFor(t => t.theme, new
+       {
+           @class = "form-control",
+           @placeholder = "Enter news",
+           @rows = 3,
+           style = "resize: none;"
+       })
+
+
+        </div>
+
+        <button type="submit" class="btn btn-default">
+            Create New
+        </button>
+    }
+
+</div>

@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Domain.Entities.Photobook>
+
+<div id="itemVisibleBody">
+    <div id="itemVisibleSmall">
+        @Html.Partial("_PhotobookListSmall", Model)
+    </div>
+    <div id="itemVisibleBig" class="hidden">
+        @Html.Partial("_PhotobookListBig", Model)
+    </div>
+    <div id="itemVisibleGallery" class="hidden">
+        <span>VIEW ON GALLERY @Model.Count()</span>
+    </div>
+</div>

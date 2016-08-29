@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Domain.Entities.Image>
+
+
+
+<p>Have @ViewBag.TotalItems images</p>
+
+<ul class="media-list">
+    @foreach (var image in Model)
+    {
+        <li class="media">
+
+            <a class="pull-left" href="#">
+                <img class="media-object" src="@Url.Action("GetImage", "Image", new { image.ImageId })" height="64" width="64">
+            </a>
+
+            <div class="media-body">
+                <h4 class="media-heading">@Html.LabelFor(i => i.First().fileName) : @(image.fileName ?? "no name")</h4>
+                <i>@Html.LabelFor(i => i.First().DateOfLoad) : @image.DateOfLoad.ToString("d MMM HH:mm")</i>
+                <br />
+
+                <!-- dropdown-submenu -->
+                <div class="btn-group dropup btn-group-xs">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        Actions
+                        <span class="glyphicon glyphicon-chevron-up"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a tabindex="-1" href="@(Url.Action("DeleteImage", "Photobook", new { ImageId = image.ImageId, returnUrl = Request.Url.PathAndQuery }))">Delete</a></li>
+                        <li><a tabindex="-1" href="@(Url.Action("SetAvatar", "Profile", new { ImageId = image.ImageId, returnUrl = Request.Url.PathAndQuery}))">Set as Avatar</a></li>
+
+                        <li>
+                            @(Ajax.ActionLink(String.Format("Open details {0}", image.fileName), "OpenDetailsImage",
+                                new { ImageId = image.ImageId },
+                                new AjaxOptions
+                                {
+                                    HttpMethod = "Get",
+                                    UpdateTargetId = "PartialImageContainer",
+                                    Url = Url.Action("OpenDetailsImage", "Photobook", new { ImageId = image.ImageId }),
+                                    OnBegin = "CallModal",
+                                    LoadingElementId = "LoadingImageContainer",
+                                    LoadingElementDuration = 1000,
+                                }))
+                        </li>
+
+                        <li class="dropdown-submenu">
+                            <a class="test" tabindex="-1" href="#"><span class="glyphicon glyphicon-chevron-right pull-right"></span>Move to </a>
+                            <ul class="dropdown-menu">
+
+                                @foreach (var photobook in ViewBag.PhotobooksForMoveTo)
+                                {
+                                    //if (photobook.PhotobookId == image.PhotobookId) { continue; }
+
+                                    <li class="@(photobook.PhotobookId == image.PhotobookId ? "disabled" : "")">
+                                        <a tabindex="-1" href="@(Url.Action("MoveImageToPhotobook", "Photobook", new { ImageId = image.ImageId, PhotobookId = photobook.PhotobookId }))">@photobook.Title</a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+                <br />
+
+                @*@Html.ActionLink("Delete", "DeleteImage", new { ImageId = image.ImageId, returnUrl = Request.Url.PathAndQuery })
+                    <span>|</span>
+                    @Html.ActionLink("Move to", "MoveToPhotobook", new { ImageId = image.ImageId, PhotobookId = default(Guid) })*@
+
+            </div>
+        </li>
+    }
+</ul>
+
+<script>
+    function CallModal() {
+        $("#imageDetails").modal()
+    }
+</script>
+
+@Html.Partial("_m_ImageDetails")

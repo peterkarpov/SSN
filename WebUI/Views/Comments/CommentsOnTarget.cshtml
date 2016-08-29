@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Domain.Entities.Comment>
+
+<ul class="list-group">
+
+    @foreach (var comment in Model)
+            {
+        <li class="list-group-item" style="border:none">
+
+
+            <div>
+                <a href="@(Url.RouteUrl(new
+                     {
+                         controller = "Profile",
+                         action = "ShowOne",
+                         ProfileId = comment.ProfileId
+                     }))">
+                    <b>@(comment.Profile.fName ?? "User has been deleted own profile...")</b>
+                </a>
+            </div>
+
+            <span>@comment.text</span>
+
+            <div class="pull-right">
+                @Html.Partial("~/Views/Like/_LikeBar.cshtml", comment.CommentId)
+            </div>
+
+            <div><i>@comment.creationTime.ToString("d MMM HH:mm")</i></div>
+
+            
+        </li>
+    }
+
+</ul>
+

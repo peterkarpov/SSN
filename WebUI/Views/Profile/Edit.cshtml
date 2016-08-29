@@ -1,0 +1,120 @@
+﻿@model Domain.Entities.Profile
+@using Domain.Entities
+@using WebUI.Infrastructure
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var SelectListrStatus = SelectedListGenerator<RelationShipStatus>.GetSelectedList((RelationShipStatus)(Model.rStatus ?? 0));
+    //var SelectListLanguage = SelectedListGenerator<Language>.GetSelectedList(Model.language ?? default(Language));
+
+    //var language = Enum.GetNames(Model.language.GetType()).ToArray();
+
+    Model.dob = Model.dob ?? default(DateTime);
+    ViewBag.dob = Model.dob;
+}
+
+<div class="col-md-offset-2 col-md-6">
+
+    @Html.ActionLink("Delete", "Delete", new { ProfileId = Model.ProfileId }, new { @class = "pull-right btn btn-danger" })
+
+    <h2>Edit Profile</h2>
+
+    @using (Html.BeginForm())
+    {
+
+        @Html.ValidationSummary()
+
+        <div class="form-group">
+
+            @*@Html.EditorForModel()*@
+
+            @Html.HiddenFor(m => m.ProfileId)
+
+            <div class="form-group">
+                <label>@Html.LabelFor(m => m.AvatarImageId)</label>
+                @Html.ActionLink("change Avatar", "ImagesForSetAvatar", new { ProfileId = Model.ProfileId }, new { @class = "btn btn-default form-control text-center" })
+            </div>
+
+
+            <div class="form-group">
+                <label>@Html.LabelFor(m => m.fName)</label>
+                @Html.TextBoxFor(m => m.fName, new { @class = "form-control text-center" })
+            </div>
+
+            <div class="form-group">
+                <label>@Html.LabelFor(m => m.lName)</label>
+                @Html.TextBoxFor(m => m.lName, new { @class = "form-control text-center" })
+            </div>
+
+            <div class="form-group">
+                <label>@Html.LabelFor(m => m.mName)</label>
+                @Html.TextBoxFor(m => m.mName, new { @class = "form-control text-center" })
+            </div>
+
+            <div class="form-group">
+                <b>@Html.LabelFor(m => m.Gender)</b>
+                <div class="radio text-left" style="margin-top:0px;">
+                    @foreach (var name in Enum.GetNames(typeof(Gender)))
+                    {
+                        <label>
+                            @Html.RadioButtonFor(m => m.Gender, name)
+                            @(name)
+                        </label>
+                        <br />
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>@Html.LabelFor(m => m.dob)</label>
+                @Html.EditorFor(m => m.dob, new { @class = "form-control" })
+            </div>
+
+            @*<div class="form-group">
+                <label>@Html.LabelFor(m => m.showEmail)</label>
+                <div class="checkbox text-left">
+                    <label>
+                        @Html.CheckBoxFor(m => m.showEmail)
+                    </label>
+                </div>
+            </div>*@
+
+            <div class="form-group">
+                <label>@Html.LabelFor(m => m.showEmail)</label>
+                @Html.CheckBoxFor(m => m.showEmail, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label>@Html.LabelFor(m => m.rStatus)</label>
+                @Html.DropDownListFor(m => m.rStatus, SelectListrStatus, new { @class = "form-control text-center" })
+            </div>
+
+            <div class="form-group">
+                <label>@Html.LabelFor(m => m.language)</label>
+                @Html.ListBoxFor(m => m.language, new MultiSelectList(Enum.GetNames(typeof(Language)).ToArray()), new { @class = "form-control text-center" })
+            </div>
+
+            <div class="form-group">
+                <label>@Html.LabelFor(m => m.country)</label>
+                @Html.EnumDropDownListFor(m => m.country, new { @class = "form-control text-center" })
+            </div>
+
+            <div class="form-group">
+                <label>@Html.LabelFor(m => m.Annotation)</label>
+                @Html.TextAreaFor(m => m.Annotation, new
+               {
+                   @class = "form-control",
+                   @placeholder = "",
+                   @rows = 3,
+                   style = "resize: none;"
+               })
+            </div>
+
+        </div>
+            <button type="submit" class="btn btn-default center-block">
+                Save Changes
+            </button>
+
+    }
+</div>

@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Domain.Entities.News>
+@{
+    ViewBag.Title = "OnUserNews";
+    Layout = "~/Views/News/_NewsLayout.cshtml";
+}
+
+<h2>OnUserNews</h2>
+
+@Html.Partial("_MessageError")
+
+@if (Model.Count() == 0)
+{
+    <p>Profile have no one News</p>
+}
+else
+{
+
+    <p>Author: @(Model.Count() > 0 ? Model.First().Profile.fName : "")</p>
+
+    <p>Have @Model.Count() news</p>
+
+    @Html.Partial("_NewsList", Model)
+
+}

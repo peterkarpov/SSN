@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Domain.Entities.Photobook>
+
+<!-- Single button -->
+<div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">More by this author <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu">
+
+        @foreach (var photobook in Model)
+        {
+            <li>
+                <a href="@Url.RouteUrl(new
+                    {
+                        Controller = "Photobook",
+                        Action = "OnePhotobook",
+                        PhotobookId = photobook.PhotobookId
+                    })
+                   ">
+                    @photobook.Title
+                </a>
+            </li>
+
+        }
+
+    </ul>
+</div>
+
+

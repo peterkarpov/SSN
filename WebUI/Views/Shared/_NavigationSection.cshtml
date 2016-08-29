@@ -1,0 +1,81 @@
+﻿@{
+    string controller = (string)ViewContext.Controller.ControllerContext.RouteData.Values["controller"];
+
+    string login = null;
+    string UserId = null;
+
+    string notyfyMessage = null;
+
+    if (User.Identity.IsAuthenticated)
+    {
+        login = User.Identity.Name.Split('|')[0];
+        UserId = User.Identity.Name.Split('|')[1];
+
+        var notifyMessageCount = WebUI.Infrastructure.NotificationRepository
+            .GetNotyfyCount(forProfileId: Guid.Parse(UserId), nType: WebUI.Infrastructure.Notification.NotificationType.Message);
+
+        if (notifyMessageCount > 0)
+        {
+            notyfyMessage = String.Format("+{0}", notifyMessageCount);
+        }
+    }
+
+
+}
+
+<ul class="lead nav nav-pills nav-stacked">
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li class="@(Request.Url.AbsolutePath.Contains(login) ? "active" : "")">
+            @Html.RouteLink("My Profile", new { Controller = "Profile", Action = "ShowOne", login = login })
+        </li>
+    }
+
+    <li class="@((controller == "ProfilesList") ? " active" : "")">
+        @Html.ActionLink("Profiles", "AllProfiles", "ProfilesList")
+    </li>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li class="@(controller == "Friends" ? " active" : "")">
+            @Html.RouteLink("Friends", new { Controller = "FriendsList", Action = "FriendsOfUser", login = login, page = 1 })
+        </li>
+    }
+
+    <li class="@(controller == "News" ? " active" : "")">
+        @Html.RouteLink("News", new { Controller = "News", Action = "AllNews", login = login, page = 1 })
+    </li>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li class="@(controller == "Messages" ? " active" : "")">
+
+            <a href="@Url.RouteUrl(new { Controller = "Messages", Action = "Talks", login })">
+                Messages
+                <span class="badge">@notyfyMessage</span>
+            </a>
+
+        </li>
+    }
+
+    <li class="@(controller == "Photobook" ? " active" : "")">
+        @Html.RouteLink("Photobooks", new { Controller = "Photobook", Action = "AllPhotobooks" })
+    </li>
+
+</ul>
+
+
+@*Auto Update Block for notifyMessage Badge*@ 
+@*<script type="text/javascript">
+            function UpdateBlock() {
+                $('#UpdateBlock').load('@(Url.Action("", ""))', { // can use partial with no controller
+                    asd: Math.random() // что б IE не кешировал
+                }, function () {
+                    setTimeout(UpdateBlock, 1000);
+                });
+            }
+            $(document).ready(function(){
+                UpdateBlock()
+            });
+</script>*@

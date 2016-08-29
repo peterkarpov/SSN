@@ -1,0 +1,20 @@
+﻿@using WebUI.Models
+@using WebUI.HtmlHelpers
+@model ProfilesListViewModel
+
+@{
+    Layout = "~/Views/FriendsList/_FriendsLayout.cshtml";
+}
+
+<h2>Friends of @(Model.Profile == null ? "Профиль не существует" : Model.Profile.fName)</h2>
+
+<p>Have @ViewBag.TotalItems friends</p>
+
+@foreach (var p in Model.Profiles)
+{
+    @Html.Partial("~/Views/Profile/_ProfileSummary.cshtml", p)
+}
+
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("ProfilesList", new { page = x }))
+</div>

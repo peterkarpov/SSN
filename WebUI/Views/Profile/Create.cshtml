@@ -1,0 +1,31 @@
+﻿@model WebUI.Models.ProfileViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Profile/_ProfileLayout.cshtml";
+
+}
+
+<div class="section">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="col-md-offset-2 col-md-8">
+
+                <h2>Create Profile</h2>
+
+                @Html.Partial("_MessageError")
+
+                @using (Html.BeginForm("Create", "Profile", FormMethod.Post))
+                {
+                    <button type="submit" class="btn btn-default">
+                        Create
+                        <br>
+                    </button>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

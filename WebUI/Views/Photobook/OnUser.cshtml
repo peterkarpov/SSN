@@ -1,0 +1,18 @@
+﻿@using WebUI.HtmlHelpers
+@model WebUI.Models.PhotobookViewModel
+@{
+    ViewBag.Title = "OnUser";
+    Layout = "~/Views/Photobook/_PhotobookLayout.cshtml";
+}
+
+
+<h2>Photobooks on @Model.Profile.fName</h2>
+
+<p>Have @Model.PagingInfo.TotalItems items</p>
+
+@Html.Partial("_PhotobookList", Model.Photobooks)
+
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("OnUser", new { page = x, UserIdString = Model.Profile.ProfileId.ToString() }))
+</div>
+

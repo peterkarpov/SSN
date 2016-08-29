@@ -1,0 +1,15 @@
+﻿@if (TempData["message-complete"] != null)
+{
+    <div class="alert alert-success text-center">
+        <a class="close" data-dismiss="alert" href="#">&times;</a>
+        @TempData["message-complete"]
+    </div>
+}
+
+@if (TempData["message-error"] != null)
+{
+    <div class="alert alert-danger text-center">
+        <a class="close" data-dismiss="alert" href="#">&times;</a>
+        @TempData["message-error"]
+    </div>
+}

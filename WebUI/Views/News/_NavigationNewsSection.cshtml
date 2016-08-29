@@ -1,0 +1,60 @@
+﻿@{
+    string classDefault = "";
+    string classActive = "active";
+
+    string controller = (string)ViewContext.Controller.ControllerContext.RouteData.Values["controller"];
+    string action = (string)ViewContext.Controller.ControllerContext.RouteData.Values["action"];
+    
+}
+
+<ul class="nav nav-tabs">
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li class=@(action == "OnUserNews" ? classActive : classDefault)>
+
+            @Html.RouteLink("MyNews",
+                                      new
+                                      {
+                                          Controller = "News",
+                                          Action = "OnUserNews",
+                                          login = User.Identity.Name.Split('|')[0]
+                                      })
+        </li>
+
+        <li class=@(action == "CreateNews" ? classActive : classDefault)>
+
+            @Html.RouteLink("CreateNews",
+                                          new
+                                          {
+                                              Controller = "News",
+                                              Action = "CreateNews",
+                                              login = User.Identity.Name.Split('|')[0]
+                                          })
+        </li>
+
+        <li class=@(action == "OnFriendsNews" ? classActive : classDefault)>
+
+            @Html.RouteLink("OnFriendsNews",
+                                             new
+                                             {
+                                                 Controller = "News",
+                                                 Action = "OnFriendsNews",
+                                                 login = User.Identity.Name.Split('|')[0]
+                                             })
+        </li>
+        
+    }
+
+    <li class=@(action == "AllNews" ? classActive : classDefault)>
+
+        @Html.RouteLink("AllNews",
+                                   new
+                                   {
+                                       Controller = "News",
+                                       Action = "AllNews"
+                                   })
+    </li>
+
+</ul>
+

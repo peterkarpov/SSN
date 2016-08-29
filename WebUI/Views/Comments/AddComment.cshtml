@@ -1,0 +1,66 @@
+﻿@model Domain.Entities.Comment
+
+@{
+
+}
+
+<ul class="list-group">
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li class="list-group-item" style="border:none">
+
+            <div class="row">
+                <div class="col-sm-12 col-sm-offset-0">
+                    @*@using (Html.BeginForm("AddComment", "Comments", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="input-group">
+
+                            @Html.TextBoxFor(t => t.text, new { @class = "form-control", @placeholder = "You can add your comments..." })                                    <input type="hidden" name="authorName" value="" />
+                            <input type="hidden" name="ProfileId" value="@Model.ProfileId" />
+                            <input type="hidden" name="TargetId" value="@Model.TargetId" />
+
+                            <input type="hidden" name="returnUrl" value="@Request.Url.PathAndQuery" />
+
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit">Add!</button>
+                            </span>
+
+                        </div>
+                    }*@
+
+                    @*<div style="border:2px solid red">*@
+
+                        @using (Ajax.BeginForm("AjaxAddComment", "Comments", null, new AjaxOptions { HttpMethod = "Post", OnSuccess = String.Format("AjaxAddCommentSend('{0}')", Model.TargetId) }, new { enctype = "multipart/form-data" }))
+                        {
+                            <div class="input-group">
+
+                                @Html.TextBoxFor(t => t.text, new { @class = "form-control", @placeholder = "You can add your comments..." })                                    <input type="hidden" name="authorName" value="" />
+                                <input type="hidden" name="ProfileId" value="@Model.ProfileId" />
+                                <input type="hidden" name="TargetId" value="@Model.TargetId" />
+
+                                <input type="hidden" name="returnUrl" value="@Request.Url.PathAndQuery" />
+
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">Add!</button>
+                                </span>
+
+                            </div>
+                        }
+
+                    @*</div>*@
+
+                </div>
+            </div>
+
+        </li>
+    }
+    else
+    {
+        <li class="list-group-item">
+            <h4>You need to registered for add your comments...</h4>
+        </li>
+    }
+
+
+</ul>

@@ -1,0 +1,157 @@
+﻿@model WebUI.Models.ProfileViewModel
+@using WebUI.Infrastructure
+@{
+    string classDefault = "btn btn-block btn-primary";
+    string classDisabled = "btn btn-block btn-primary disabled";
+
+}
+
+@if ((string)ViewBag.FriendStatus == "your profile")
+{
+    @Html.ActionLink("change Avatar", "ImagesForSetAvatar",
+                    new
+                    {
+                        ProfileId = Model.Profile.ProfileId
+                    },
+                    new
+                    {
+                        @class = "btn btn-block btn-default"
+                    })
+    <br />
+}
+
+<div class="alert alert-info text-center">@(ViewBag.FriendStatus?.ToString())</div>
+
+@if (OnLineLogic.IsOnLine((Guid)Model.Profile.ProfileId))
+{
+    <div class="alert alert-success text-center">OnLine</div>
+}
+else
+{
+    <div class="alert alert-danger text-center">OffLine</div>
+}
+
+
+@switch ((string)ViewBag.FriendStatus)
+{
+    case "none":
+    case "your subscriber":
+        @Html.RouteLink("Add to Friends",
+                  new
+                  {
+                      Controller = "FriendsList",
+                      Action = "AddToFriends",
+                      ProfileId = User.Identity.Name.Split('|')[1],
+                      subscriberId = Model.Profile.ProfileId,
+                      returnUrl = Request.Url.PathAndQuery,
+                  },
+                  new
+                  {
+                      @class = classDefault
+                  })
+
+        @Html.RouteLink("Send Message",
+                  new
+                  {
+                      Controller = "Messages",
+                      Action = "SendMessage",
+                      fromProfileId = User.Identity.Name.Split('|')[1],
+                      toProfileId = Model.Profile.ProfileId
+                  },
+                  new
+                  {
+                      @class = classDefault
+                  })
+        break;
+
+    case "your profile":
+        break;
+
+    case "your best friends":
+    case "your friend":
+        @Html.RouteLink("Remove From Friends",
+                  new
+                  {
+                      Controller = "FriendsList",
+                      Action = "RemoveFromFriends",
+                      ProfileId = User.Identity.Name.Split('|')[1],
+                      subscriberId = Model.Profile.ProfileId,
+                      returnUrl = Request.Url.PathAndQuery,
+                  },
+                  new
+                  {
+                      @class = classDefault
+                  })
+
+        @Html.RouteLink("Send Message",
+                  new
+                  {
+                      Controller = "Messages",
+                      Action = "SendMessage",
+                      fromProfileId = User.Identity.Name.Split('|')[1],
+                      toProfileId = Model.Profile.ProfileId
+                  },
+                  new
+                  {
+                      @class = classDefault
+                  })
+        break;
+
+    case "no identity":
+
+
+
+        break;
+
+    default:
+        break;
+}
+
+@Html.RouteLink("Show Photobook",
+                  new
+                  {
+                      Controller = "Photobook",
+                      Action = "OnUser",
+                      login = User.Identity.Name.Split('|')[0],
+
+                  },
+                  new
+                  {
+                      @class = classDefault
+                  })
+
+@Html.RouteLink("Show News",
+                  new
+                  {
+                      Controller = "News",
+                      Action = "OnUserNews",
+                      ProfileId = Model.Profile.ProfileId
+                  },
+                  new
+                  {
+                      @class = classDefault
+                  })
+
+@Html.RouteLink(String.Format("Friends of {0}", Model.Profile.fName),
+                             new
+                             {
+                                 Controller = "FriendsList",
+                                 Action = "FriendsOfUser",
+                                 ProfileId = Model.Profile.ProfileId
+                             },
+                             new
+                             {
+                                 @class = classDefault
+                             })
+
+@Html.RouteLink(String.Format("Subscriber of {0}", Model.Profile.fName),
+                             new
+                             {
+                                 Controller = "FriendsList",
+                                 Action = "SubscriberOfUser",
+                                 ProfileId = Model.Profile.ProfileId
+                             },
+                             new
+                             {
+                                 @class = classDefault
+                             })

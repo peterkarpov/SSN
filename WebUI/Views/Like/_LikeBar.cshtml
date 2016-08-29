@@ -1,0 +1,63 @@
+﻿@model Guid
+
+<a style="text-decoration:none" 
+   onclick="SetLike('@(String.Format("{0}", Model))')"
+   >
+    <span class="glyphicon glyphicon-thumbs-up text-success">
+    </span>
+    <div style="display: inline;" class="text-success" 
+         id="@String.Format("GetLike{0}", Model)">
+        @(Html.Action("GetLike", "Like", new { TargetId = Model }))
+    </div>
+</a>
+
+<a style="text-decoration:none"
+   onclick="SetDislike('@(String.Format("{0}", Model))')">
+    <span class="glyphicon glyphicon-thumbs-up text-danger">
+    </span>
+    <div style="display: inline;" class="text-danger"
+         id="@String.Format("GetDislike{0}", Model)">
+        @(Html.Action("GetDislike", "Like", new { TargetId = Model }))
+    </div>
+</a>
+
+
+
+
+<!-- old version -->
+
+@*<a style="text-decoration:none" href="@(Url.RouteUrl(new
+                                                     {
+                                                         controller = "Like",
+                                                         action = "SetLike",
+
+                                                         TargetId = Model,
+                                                         login = User.Identity.Name.Split('|')[0].ToString(),
+                                                         returnUrl = Request.Url.PathAndQuery
+                                                     }))">
+    <span class="glyphicon glyphicon-thumbs-up text-success">
+    </span>
+    <span class="text-success">
+        @(Html.Action("GetLike", "Like", new { TargetId = Model }).ToString() ?? "0")
+    </span>
+
+</a>
+
+
+
+<a style="text-decoration:none" href="@(Url.RouteUrl(new
+                                                     {
+                                                         controller = "Like",
+                                                         action = "SetDislike",
+
+                                                         TargetId = Model,
+                                                         login = User.Identity.Name.Split('|')[0].ToString(),
+                                                         returnUrl = Request.Url.PathAndQuery
+                                                     }))">
+    <span class="glyphicon glyphicon-thumbs-down text-danger">
+    </span>
+    <span class="text-danger">
+        @(Html.Action("GetDislike", "Like", new { TargetId = Model }).ToString() ?? "0")
+    </span>
+
+</a>*@

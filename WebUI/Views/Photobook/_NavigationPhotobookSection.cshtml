@@ -1,0 +1,83 @@
+﻿@{
+    string classDefault = "";
+    string classActive = "active";
+
+    string action = (string)ViewContext.Controller.ControllerContext.RouteData.Values["action"];
+
+}
+
+<ul class="nav nav-tabs">
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li class=@(false ? classActive : classDefault)>
+
+            @Html.RouteLink("My Photobooks",
+                                             new
+                                             {
+                                                 Controller = "Photobook",
+                                                 Action = "OnUser",
+                                                 login = User.Identity.Name.Split('|')[0]
+                                             })
+        </li>
+
+        <li class=@(action == "AddPhotobook" ? classActive : classDefault)>
+
+            @Html.RouteLink("Add Photobook",
+                                             new
+                                             {
+                                                 Controller = "Photobook",
+                                                 Action = "AddPhotobook",
+                                                 ProfileId = Guid.Parse(User.Identity.Name.Split('|')[1])
+                                             })
+        </li>
+        
+        <li class=@(action == "OnFriends" ? classActive : classDefault)>
+
+            @Html.RouteLink("Friends",
+                                       new
+                                       {
+                                           Controller = "Photobook",
+                                           Action = "OnFriends",
+                                           login = User.Identity.Name.Split('|')[0]
+                                       })
+        </li>
+    }
+    <li class=@(action == "AllPhotobooks" ? classActive : classDefault)>
+
+        @Html.RouteLink("All",
+                               new
+                               {
+                                   Controller = "Photobook",
+                                   Action = "AllPhotobooks"
+                               })
+    </li>
+
+    <li class=@(action != "AddPhotobook" & action != "AddImageOnPhotobook" ? "pull-right" : "hidden")>
+
+        <a href="#" onclick="ViewSmall()">
+            <span class="glyphicon glyphicon-th-list"></span>
+            Small
+        </a>
+      
+    </li>
+
+    <li class=@(action != "AddPhotobook" & action != "AddImageOnPhotobook" ? "pull-right" : "hidden")>
+
+        <a href="#" onclick="ViewBig()">
+            <span class="glyphicon glyphicon-th"></span>
+            Big
+        </a>
+
+    </li>
+
+    <li class=@(action != "AddPhotobook" & action != "AddImageOnPhotobook" ? "pull-right" : "hidden")>
+
+        <a href="@Url.RouteUrl(new { Controller = "Photobook", Action = "AllPhotobooks" })">
+            <span class="glyphicon glyphicon-picture"></span>
+            Gallery
+        </a>
+
+    </li>
+
+</ul>

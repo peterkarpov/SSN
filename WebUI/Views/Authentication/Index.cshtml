@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+@if (TempData["message-complete"] != null)
+{
+    <div class="alert alert-success text-center">
+        <a class="close" data-dismiss="alert" href="#">&times;</a>
+        @TempData["message-complete"]
+    </div>
+}
+
+@if (TempData["message-error"] != null)
+{
+    <div class="alert alert-danger text-center">
+        <a class="close" data-dismiss="alert" href="#">&times;</a>
+        @TempData["message-error"]
+    </div>
+}
+
+<script>
+    $(".alert").alert()
+</script>

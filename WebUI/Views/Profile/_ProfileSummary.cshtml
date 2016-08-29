@@ -1,0 +1,73 @@
+﻿@model Domain.Entities.Profile
+@using WebUI.Infrastructure
+@{
+
+}
+
+<ul class="media-list">
+    <li class="media">
+        <a class="pull-left" href="@(Url.RouteUrl(new
+                               { controller = "Profile",
+                                   action = "ShowOne",
+                                   ProfileId = Model.ProfileId
+                               }))">
+            <img class="media-object" src="@Url.Action("GetImage", "Image", new { Model.AvatarImageId })" height="64" width="64">
+        </a>
+        <div class="media-body">
+            <a href="@(Url.RouteUrl(new
+                 { controller = "Profile",
+                     action = "ShowOne",
+                     ProfileId = Model.ProfileId
+                 }))">
+                <h4 class="media-heading">
+                    @Model.fName
+                    <small>
+                        @(OnLineLogic.IsOnLine((Guid)Model.ProfileId) ? "OnLine" : "OffLine")
+                    </small>
+                </h4>
+            </a>
+
+            @if (Model.Annotation != null)
+            {
+                <p>
+                    <span class="text-info"><b>@Html.LabelFor(m=>m.Annotation):</b>@Model.Annotation</span>
+                </p>
+            }
+
+            <p>
+                Have @Model.Friends.Count() friends
+            </p>
+
+
+            <!-- Single button -->
+            <div class="btn-group dropup btn-group-xs">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Actions <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        @Html.RouteLink("Show Profile", new
+                   {
+                       Controller = "Profile",
+                       Action = "ShowOne",
+                       ProfileId = Model.ProfileId
+                   })
+                    </li>
+
+                    @if (User.Identity.IsAuthenticated && User.Identity.Name.Split('|')[1] != Model.ProfileId.ToString())
+                    {
+                    <li>
+                        @Html.RouteLink("Send Message",
+                       new
+                       {
+                           Controller = "Messages",
+                           Action = "SendMessage",
+                           fromProfileId = User.Identity.Name.Split('|')[1],
+                           toProfileId = Model.ProfileId,
+                       })
+                    </li>
+                    }
+                </ul>
+            </div>
+
+        </div>
+    </li>
+</ul>

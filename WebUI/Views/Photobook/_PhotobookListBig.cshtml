@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Domain.Entities.Photobook>
+
+<div class="col-md-12">
+    <div class="section">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="text-center">@(ViewBag.TotalItems > 0 ? String.Format("Have {0} Photobook(s)", ViewBag.TotalItems) : null)</h1>
+                </div>
+            </div>
+
+            <div class="row">
+
+                @foreach (var photobook in Model)
+                {
+                    <div class="col-md-4">
+                        <a href="@(Url.Action("OnePhotobook", "Photobook", new { PhotobookId = photobook.PhotobookId }))">
+                            <img style="padding-top:15px;" src="@Url.Action("GetImage", "Image", new { ImageId = (photobook.Images.Count() > 0) ? photobook.Images.First().ImageId : default(Guid) })" class="img-responsive center-block">
+
+                            <span class="badge" style="position:absolute; right:20px; margin:-10px;">@photobook.Images.Count() images</span>
+                        </a>
+                        <span>@Html.LabelFor(i => i.First().Title) : @(photobook.Title ?? "no name")</span>
+                        <br />
+                        <i>@(Html.LabelFor(i => i.First().Images.First().DateOfLoad)) : @(photobook.Images.OrderByDescending(i => i.DateOfLoad).FirstOrDefault()?.DateOfLoad.ToString("d MMM HH:mm"))</i>
+                        <br />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+    div.col-md-4:hover {
+        border-color: #66afe9;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
+        outline: 0 none;
+    }
+</style>

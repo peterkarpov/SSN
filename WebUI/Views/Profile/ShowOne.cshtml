@@ -1,0 +1,194 @@
+﻿@model WebUI.Models.ProfileViewModel
+@{
+    ViewBag.Title = "MainList";
+    Layout = "~/Views/Profile/_ProfileLayout.cshtml";
+
+}
+
+@Html.Partial("_MessageError")
+
+@if (Model.Profile == null)
+{
+    <h2>Profile not found</h2>
+
+    if (Model.User?.login == User.Identity.Name.Split('|')[0])
+    {
+        <span>
+            Do you want
+            @Html.RouteLink("create Profile", new { controller = "Profile", action = "Create" }, new { @class = "" })
+            ?
+        </span>
+
+    }
+
+}
+else
+{
+
+
+    <div class="col-md-3">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div style="margin-top:20px;margin-bottom:20px;">
+
+                    <img class="center-block img-responsive" alt="" src="@(Url.Action("GetImage", "Image", new { ImageId = Model.Profile.AvatarImageId }))" />
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-12">
+
+                @Html.Partial("~/Views/Profile/_MainButtonProfileSection.cshtml", Model)
+
+            </div>
+        </div>
+    </div>
+    @*//////////////////////////////////////////////////////*@
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Profile Info:</h2>
+
+                @if (Model.Profile.fName != null)
+                {
+                    <div>@Html.LabelFor(m => m.Profile.fName): @Model.Profile.fName</div>
+                }
+
+                @if (Model.Profile.mName != null)
+                {
+                    <div>@Html.LabelFor(m => m.Profile.mName): @Model.Profile.mName</div>
+                }
+
+                @if (Model.Profile.lName != null)
+                {
+                    <div>@Html.LabelFor(m => m.Profile.lName): @Model.Profile.lName</div>
+                }
+
+                @if (Model.Profile.dob != null)
+                {
+                    <div>@Html.LabelFor(m => m.Profile.dob): @(Model.Profile.dob != null ? ((DateTime)Model.Profile.dob).ToString("d") : "")</div>
+                }
+
+                @if (Model.Profile.Gender != null)
+                {
+                    <div>@Html.LabelFor(m => m.Profile.Gender): @((Domain.Entities.Gender)Model.Profile.Gender)</div>
+                }
+
+                @*@if (Model.Profile.languageForDB != null)
+                    {
+                        <div>
+                            @Html.LabelFor(m => m.Profile.languageForDB):
+                            @foreach (var item in Model.Profile.languageForDB.Split(new char[','], StringSplitOptions.RemoveEmptyEntries))
+                            {
+                                if ((item == "[") | (item == "]")) { continue; }
+                                <span>@((Domain.Entities.Language)(Int32.Parse(item)))</span>
+                            }
+                            @Model.Profile.languageForDB
+                        </div>
+                    }*@
+
+                @if (Model.Profile.language != null)
+                {
+                    <div>
+                        @Html.LabelFor(m => m.Profile.language):
+                        @foreach (var language in Model.Profile.language)
+                        {
+                            <span>@language </span>
+                        }
+                    </div>
+                }
+
+                @if (Model.Profile.rStatus != null)
+                {
+                    <div>@Html.LabelFor(m => m.Profile.rStatus): @Model.Profile.rStatus</div>
+                }
+
+                @if (Model.Profile.country != null)
+                {
+                    <div>@Html.LabelFor(m => m.Profile.country): @Model.Profile.country</div>
+                }
+
+                @if (Model.Profile.Annotation != null)
+                {
+                    <div>@Html.LabelFor(m => m.Profile.Annotation): @Model.Profile.Annotation</div>
+                }
+
+                @if (Model.Profile.showEmail)
+                {
+                    <div><b>Email</b>: @(Model.User?.email)</div>
+                }
+
+            </div>
+        </div>
+
+        <div class="row">
+            @Html.Partial("_StatisticOfProfile", Model.Statistic)
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section text-justify">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <h3>Last News of @Model.Profile.fName</h3>
+
+
+
+                            @if (Model.Profile.News.Count() > 0)
+                            {
+                                <p>
+                                    @Html.RouteLink("See All (" + Model.Profile.News.Count() + ") News",
+                                                        new
+                                                        {
+                                                            Controller = "News",
+                                                            Action = "OnUserNews",
+                                                            ProfileId = Model.Profile.ProfileId
+                                                        })
+                                </p>
+
+                                @Html.Partial("~/Views/News/_NewsList.cshtml", Model.Profile.News.OrderByDescending(n => n.creationTime).Take(3))
+                            }
+                            else
+                            {
+                                <p>Profile have no News</p>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section text-justify">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <h3>Last Images of @Model.Profile.fName</h3>
+
+                            @if (Model.Profile.Images.Count() > 0)
+                            {
+                                @Html.Partial("~/Views/Photobook/_ImageListBig.cshtml", Model.Profile.Images.OrderByDescending(i => i.DateOfLoad).Take(3))
+                            }
+                            else
+                            {
+                                <p>Profile have no Photobooks</p>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

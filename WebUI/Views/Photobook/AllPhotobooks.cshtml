@@ -1,0 +1,17 @@
+﻿@model WebUI.Models.PhotobookViewModel
+@using WebUI.HtmlHelpers
+@{
+    ViewBag.Title = "All Photobooks";
+    Layout = "~/Views/Photobook/_PhotobookLayout.cshtml";
+    
+}
+
+<h2>All Photobooks</h2>
+
+<p>Have @Model.PagingInfo.TotalItems items</p>
+
+@Html.Partial("_PhotobookList", Model.Photobooks)
+
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("AllPhotobooks", new { page = x }))
+</div>

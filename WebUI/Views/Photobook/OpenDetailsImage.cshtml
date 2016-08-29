@@ -1,0 +1,49 @@
+﻿@model Domain.Entities.Image
+
+<div class="row">
+    <div class="col-md-12">
+        <img src="@Url.Action("GetImage", "Image", new { Model.ImageId })"
+             class="img-responsive">
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-offset-0 col-md-12">
+
+        <h4>@Html.LabelFor(i => i.fileName) : @(Model.fileName ?? "no name")</h4>
+        <h4>@Html.LabelFor(i => i.DateOfLoad) : @Model.DateOfLoad.ToString("d MMM HH:mm")</h4>
+        <h4><label>Photobook</label> : @(Model.Photobook.Title)</h4>
+        <h4><label>Author</label> : @(Model.Profile.fName)</h4>
+
+        <br />
+        <div class="pull-right">
+            @Html.Partial("~/Views/Like/_LikeBar.cshtml", Model.ImageId)
+        </div>
+    </div>
+
+        
+</div>
+<div class="row">
+
+    @Html.Action("AddComment", "Comments", new { TargetId = Model.ImageId, returnUrl = Request.Url.PathAndQuery })
+
+</div>
+<div class="row">
+
+    <div id="@Model.ImageId.ToString()">
+        <div class="ajaxLink">
+            @Ajax.ActionLink("See All Comments", "CommentsOnTarget", "Comments",
+                                             new { TargetId = Model.ImageId },
+                                             new AjaxOptions
+                                             {
+                                                 UpdateTargetId = Model.ImageId.ToString(),
+
+                                                 Url = Url.Action("CommentsOnTarget", "Comments",
+                                                 new { TargetId = Model.ImageId }),
+
+                                             },
+                                             new { @class = "btn btn-block btn-link" })
+        </div>
+        @Html.Action("CommentsOnTarget", "Comments", new { TargetId = Model.ImageId, commentsCount = 3 })
+
+    </div>
+</div>

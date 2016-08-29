@@ -1,0 +1,20 @@
+﻿@model Domain.Entities.Photobook
+
+<a class="pull-left" href="#">
+    <img class="media-object" src="@Url.Action("GetImage", "Image", new { ImageId = (Model.Images.Count() > 0) ? Model.Images.First().ImageId : default(Guid) })" height="64" width="64">
+</a>
+
+<div class="media-body">
+    <h4 class="media-heading">Photobook Title: @Model.Title</h4>
+    <p>This photobook have @Model.Images.Count() image(s)</p>
+    <p>Autor this photobook @Model.Profile.fName</p>
+
+    @Html.ActionLink("show with action link", "OnePhotobook", new { PhotobookId = Model.PhotobookId })
+
+    @if (Model.ProfileId.ToString() == User.Identity.Name.Split('|')[1])
+    {
+        <span>|</span>
+        @Html.ActionLink("Add Image On Photobook", "AddImageOnPhotobook", new { PhotobookId = Model.PhotobookId })
+    }
+</div>
+

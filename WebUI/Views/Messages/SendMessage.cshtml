@@ -1,0 +1,12 @@
+﻿@model Domain.Entities.Message
+@{
+    ViewBag.Title = "SendMessage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Send Message</h2>
+
+<h3>from: @Model.ProfileFrom.fName</h3>
+<h3>to: @Model.ProfileTo.fName</h3>
+
+@Html.Action("SendMessagePartial", new { fromProfileId = Model.from, toProfileId = Model.to })

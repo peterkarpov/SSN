@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    @System.Web.Optimization.Styles.Render("~/Content/css/jqueryui")
+    @System.Web.Optimization.Styles.Render("~/Content/css")
+
+    @System.Web.Optimization.Scripts.Render("~/bundles/modernizr")
+
+    @System.Web.Optimization.Styles.Render("~/css/jquery.Jcrop.min.css")
+
+    @RenderSection("styles", required: false)
+
+</head>
+<body>
+
+    @Html.Partial("_HeaderSection")
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Partial("_NavigationSection")
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.Partial("_FooterSection")
+
+    @RenderSection("scripts", required: false)
+
+    @System.Web.Optimization.Scripts.Render("~/Content/jsdelivr")
+
+    @System.Web.Optimization.Scripts.Render("~/bundles/jquery")
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryui")
+    @System.Web.Optimization.Scripts.Render("~/bundles/bootstrap")
+
+    @System.Web.Optimization.Scripts.Render("~/Scripts/bootstrap-tooltip")
+    @System.Web.Optimization.Scripts.Render("~/Scripts/bootstrap-typeahead")
+
+    @System.Web.Optimization.Scripts.Render("~/Scripts/jquery.unobtrusive-ajax")
+
+    @System.Web.Optimization.Scripts.Render("~/js/jquery.Jcrop.min.js")
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Domain.Entities.Photobook>
+
+<ul class="media-list">
+    @foreach (var photobook in Model)
+    {
+        <li class="media">
+            @Html.Partial("_PhotobookSummary", photobook)
+        </li>
+    }
+</ul>
+
+
+
+
+
+
+

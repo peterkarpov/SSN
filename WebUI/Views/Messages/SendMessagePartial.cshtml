@@ -1,0 +1,43 @@
+﻿@model Domain.Entities.Message
+@{
+    ViewBag.Title = "SendMessage";
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <ul class="media-list">
+            <li class="media">
+                <a class="pull-left" href="@(Url.RouteUrl(new
+                                   {
+                                       controller = "Profile",
+                                       action = "ShowOne",
+
+                                       ProfileId = Model.ProfileFrom.ProfileId
+                                    }))">
+                    <img class="media-object" src="@Url.Action("GetImage", "Image", new { ImageId = Model.ProfileFrom.AvatarImageId })" height="64" width="64">
+                </a>
+                <div class="media-body">
+
+                    @using (Html.BeginForm("SendMessage", "Messages", FormMethod.Post))
+                    {
+                        @Html.Hidden("to", Model.to)
+                        @Html.Hidden("from", Model.from)
+                    
+                        <div class="form-group">
+                            @Html.TextAreaFor(t => t.text, new
+                       {
+                           @class = "form-control",
+                           @placeholder = "Enter message",
+                           @rows = 3,
+                           style = "resize: none;"
+                       })
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    }
+                </div>
+            </li>
+        </ul>
+
+    </div>
+</div>

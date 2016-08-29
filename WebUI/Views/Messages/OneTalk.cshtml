@@ -1,0 +1,107 @@
+﻿@model WebUI.Models.TalkViewModel
+@using WebUI.HtmlHelpers
+@{
+    ViewBag.Title = "OneTalk";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Model.Messages.Reverse();
+}
+
+<h2>OneTalk</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <ul class="media-list">
+            <li class="media">
+                <a class="pull-left" href="@(Url.RouteUrl(new
+                                           {
+                                               controller = "Profile",
+                                               action = "ShowOne",
+
+                                               ProfileId = Model.to.ProfileId
+
+                                           }))">
+
+                    <img class="media-object" src="@Url.Action("GetImage", "Image", new {
+                                                      ImageId = Model.to.AvatarImageId
+                                                  })" height="64" width="64">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        your talk on
+                        <a href="@(Url.RouteUrl(new
+                                           {
+                                               controller = "Profile",
+                                               action = "ShowOne",
+
+                                               ProfileId = Model.to.ProfileId
+
+                                           }))">
+                            @Model.to.fName
+                        </a>
+                    </h4>
+                    <p>have @Model.PagingInfo.TotalItems messages</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        @if (Model.PagingInfo.TotalItems > Model.Messages.Count())
+        {
+
+            <a href="@(Url.Action("OneTalk", new { TalkId = Model.TalkId, page = Model.PagingInfo.CurrentPage, pageSize = Model.pageSize + 5 }))" class="btn btn-block btn-link">load previous</a>
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+
+            <tbody>
+
+                @foreach (var message in Model.Messages)
+                {
+
+                    <tr>
+                        <td class="col-md-3">
+                            <a class="pull-right hidden-xs" href="@(Url.RouteUrl(new
+                                   {
+                                       controller = "Profile",
+                                       action = "ShowOne",
+
+                                       ProfileId = message.ProfileFrom.ProfileId
+                                    }))">
+                                <img class="media-object" src="@Url.Action("GetImage", "Image", new {
+                                                              ImageId = message.ProfileFrom.AvatarImageId
+                                                          })" height="64" width="64">
+                            </a>
+                        </td>
+                        <td class="col-md-6">
+                            <h4 class="media-heading text-primary">@message.ProfileFrom.fName</h4>
+                            <p>
+                                @message.text
+                            </p>
+                        </td>
+                        <td class="col-md-3">
+                            <small class="pull-right">@message.creationTime.ToString("d MMM HH:mm")</small>
+                        </td>
+                    </tr>
+                    
+                }
+
+            </tbody>
+
+
+
+        </table>
+    </div>
+</div>
+
+@Html.Action("SendMessagePartial", new { fromProfileId = Model.from.ProfileId, toProfileId = Model.to.ProfileId })
+
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("OneTalk", new { TalkId = Model.TalkId, page = x, pageSize = Model.pageSize }))
+</div>

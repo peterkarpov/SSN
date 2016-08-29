@@ -1,0 +1,42 @@
+﻿@{
+    string classDefault = "";
+    string classActive = "active";
+
+    string controller = (string)ViewContext.Controller.ControllerContext.RouteData.Values["controller"];
+    string action = (string)ViewContext.Controller.ControllerContext.RouteData.Values["action"];
+
+}
+
+<ul class="nav nav-tabs">
+
+
+    <li class=@(action == "FriendsOfUser" ? classActive : classDefault)>
+
+        @Html.RouteLink("Friends of User",
+                             new
+                             {
+                                 Controller = "FriendsList",
+                                 Action = "FriendsOfUser",
+                                 login = User.Identity.Name.Split('|')[0]
+                             })
+    </li>
+
+    <li class=@(action == "SubscriberOfUser" ? classActive : classDefault)>
+
+        @Html.RouteLink("Subscriber of User",
+                             new
+                             {
+                                 Controller = "FriendsList",
+                                 Action = "SubscriberOfUser",
+                                 login = User.Identity.Name.Split('|')[0]
+                             })
+    </li>
+
+    
+
+
+
+
+
+
+</ul>

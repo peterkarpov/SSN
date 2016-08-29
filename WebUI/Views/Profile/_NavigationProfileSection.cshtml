@@ -1,0 +1,50 @@
+﻿@{
+    string classDefault = "";
+    string classActive = "active";
+
+    string action = (string)ViewContext.Controller.ControllerContext.RouteData.Values["action"];
+}
+
+<ul class="nav nav-tabs">
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li class=@(action == "ShowOne" ? classActive : classDefault)>
+
+            @Html.RouteLink("Profile",
+                                       new
+                                       {
+                                           Controller = "Profile",
+                                           Action = "ShowOne",
+                                           login = User.Identity.Name.Split('|')[0]
+                                       })
+        </li>
+
+        <li class=@(action == "Edit" ? classActive : classDefault)>
+
+            @Html.RouteLink("Edit My Profile",
+                                               new
+                                               {
+                                                   Controller = "Profile",
+                                                   Action = "Edit",
+                                                   login = User.Identity.Name.Split('|')[0]
+                                               })
+        </li>
+    }
+    else
+    {
+        <li class=@(action == "Create" ? classActive : classDefault)>
+
+            @Html.RouteLink("Create",
+                                      new
+                                      {
+                                          Controller = "Profile",
+                                          Action = "Create"
+                                      })
+        </li>
+    }
+
+</ul>
+
+
+
