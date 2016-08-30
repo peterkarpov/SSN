@@ -18,7 +18,7 @@ namespace Domain.Entities.MetaData
         public string fName { get; set; }
 
 
-        [StringLength(49)]
+        [StringLength(50)]
         public string lName { get; set; }
 
 

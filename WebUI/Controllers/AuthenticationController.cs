@@ -156,8 +156,6 @@
 
         public JsonResult CheckUserName(string username)
         {
-            var a = Enum.GetValues(typeof(RelationShipStatus)).GetUpperBound(0).ToString();
-
             var result = repository.Users.Where(u => u.login == username).Count() == 0;
             //var result = Membership.FindUsersByName(username).Count == 0;
             return Json(result, JsonRequestBehavior.AllowGet);

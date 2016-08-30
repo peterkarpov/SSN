@@ -1,6 +1,8 @@
 ﻿namespace WebUI.Controllers
 {
     using Domain;
+    using Domain.Entities;
+    using System;
     using System.Linq;
     using System.Web.Mvc;
     using WebUI.Models;
@@ -73,6 +75,14 @@
 
             return View("AllProfiles", model);
         }
+
+        public JsonResult CheckGender(Gender gender)
+        {
+            var result = !Enum.IsDefined(typeof(Gender), gender);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         
+
     }
 }
