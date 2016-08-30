@@ -12,7 +12,7 @@ namespace WebUI.Models
         [Display(Name = "Login, also your User Name")]
         [StringLength(10, MinimumLength = 3, ErrorMessage = "The User Name should be between 3 and 10 characters")]
         [RegularExpression(@"[A-Za-z0-9]+", ErrorMessage = "Wrong login")]
-        [System.Web.Mvc.Remote("CheckUserName", "Authentication","This login already using")]
+        [System.Web.Mvc.Remote("CheckUserName", "Authentication", "This login already using")]
         public string UserName { get; set; }
         
 

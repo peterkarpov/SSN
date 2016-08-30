@@ -83,6 +83,8 @@ namespace WebUI.Controllers
             return View(model); //list
         }
 
+        [ProfileAuth(Order = 1)]
+        [Authorize]
         public ActionResult OnFriends(string ProfileId, string login, int page = 1)
         {
             PhotobookViewModel model = new PhotobookViewModel();
@@ -124,6 +126,8 @@ namespace WebUI.Controllers
             return View(model); //list
         }
 
+        [ProfileAuth(Order = 1)]
+        [Authorize]
         [HttpGet]
         public ActionResult AddPhotobook(Guid ProfileId)
         {
@@ -132,6 +136,8 @@ namespace WebUI.Controllers
             return View(model);
         }
 
+        [ProfileAuth(Order = 1)]
+        [Authorize]
         [HttpPost]
         public ActionResult AddPhotobook(Photobook Photobook)
         {
@@ -166,8 +172,9 @@ namespace WebUI.Controllers
             return RedirectToAction("OnePhotobook", new { PhotobookId = Photobook.PhotobookId });
         }
 
+
+        [ProfileAuth(Order = 1)]
         [Authorize]
-        [ProfileAuth]
         public ActionResult DeleteImage(Guid ImageId, string returnUrl = null)
         {
             var image = repository.Images.FirstOrDefault(i => i.ImageId == ImageId);
@@ -191,6 +198,7 @@ namespace WebUI.Controllers
             return Redirect(returnUrl ?? Url.Action("OnePhotobook", new { PhotobookId = image.PhotobookId }));
         }
 
+        [ProfileAuth(Order = 1)]
         [Authorize]
         public ActionResult MoveImageToPhotobook(Guid ImageId, Guid PhotobookId)
         {
@@ -283,6 +291,8 @@ namespace WebUI.Controllers
             return PartialView(model);
         }
 
+        [ProfileAuth(Order = 1)]
+        [Authorize]
         public ActionResult AddImageOnPhotobook(Guid PhotobookId)
         {
             var model = new AddImageViewModel();
@@ -317,6 +327,8 @@ namespace WebUI.Controllers
             return View(model);
         }
 
+        [ProfileAuth(Order = 1)]
+        [Authorize]
         [HttpPost]
         public ActionResult ResizeImage(AddImageViewModel model, HttpPostedFileBase uploadImage)
         {
@@ -372,6 +384,8 @@ namespace WebUI.Controllers
             return RedirectToAction("OnePhotobook", new { PhotobookId = model.Image.PhotobookId });
         }
 
+        [ProfileAuth(Order = 1)]
+        [Authorize]
         [HttpPost]
         public ActionResult AddImageOnPhotobook(AddImageViewModel model, HttpPostedFileBase uploadImage)
         {

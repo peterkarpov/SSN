@@ -8,7 +8,8 @@
     <section name="nlog" type="NLog.Config.ConfigSectionHandler, NLog" />
     <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
     <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
-  <section name="resizer" type="ImageResizer.ResizerSection" requirePermission="false" /></configSections>
+    <section name="resizer" type="ImageResizer.ResizerSection" requirePermission="false" />
+  </configSections>
   <nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <targets>
       <!-- D://file.txt ~/App_Data/logfile.txt -->
@@ -23,25 +24,24 @@
     <add key="webpages:Enabled" value="false" />
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
-    <!-- h:\root\home\ssn1213-001\www\site1 -->
-    <add key="rootPath" value="C:\Users\A\Documents\visual studio 2015\Projects\SSN\WebUI"/>
   </appSettings>
   <system.web>
     <globalization uiCulture="en-AU" culture="en-AU" />
-    <!--
+<!--
     <customErrors mode="On" defaultRedirect="~/Views/Shared/Error">
       <error statusCode="404" redirect="~/Views/Shared/Error" />
       <error statusCode="403" redirect="~/Views/Authentication/SignIn.cshtml" />
     </customErrors>
-    -->
-    <compilation debug="true" targetFramework="4.5.2" />
+-->
+    <compilation targetFramework="4.5.2" />
     <httpRuntime targetFramework="4.5.2" />
     <authentication mode="Forms">
       <forms loginUrl="~/Authentication/SignIn" timeout="2880"></forms>
     </authentication>
-  <httpModules>
+    <httpModules>
       <add name="ImageResizingModule" type="ImageResizer.InterceptModule" />
-    </httpModules></system.web>
+    </httpModules>
+  </system.web>
   <runtime>
     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
       <dependentAssembly>
@@ -83,21 +83,24 @@
     </providers>
   </entityFramework>
   <connectionStrings>
-    
-    <add name="SSN-AppData" connectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=&quot;C:\Users\A\Documents\Visual Studio 2015\Projects\SSN\WebUI\App_Data\SSN.mdf&quot;;Integrated Security=True" providerName="System.Data.SqlClient" />
-
-    <add name="DB_A0C61B_ssn" connectionString="Data Source=SQL5019.myASP.NET;Initial Catalog=DB_A0C61B_ssn;Persist Security Info=True;User ID=DB_A0C61B_ssn_admin;Password=qq12345678;" providerName="System.Data.SqlClient"/>
-
+   
+    <add name="SSN" connectionString="Data Source=SQL5019.myASP.NET ;Initial Catalog=DB_A0C61B_ssn;User Id=DB_A0C61B_ssn_admin;Password=12345678;" />
+  
   </connectionStrings>
-<system.webServer>
-<!--
-  <httpErrors errorMode="Custom" existingResponse="Replace">
-    <remove statusCode="404" />
-    <error statusCode="404" responseMode="Redirect" path="~/Views/Shared/Error.cshtml" />
-  </httpErrors>
-  -->
+  <system.webServer>
+	
+	<!--
+    <httpErrors errorMode="Custom" existingResponse="Replace">
+      <remove statusCode="404" />
+      <error statusCode="404" responseMode="Redirect" path="~/Views/Shared/Error.cshtml" />
+    </httpErrors>
+	-->
+	<httpErrors errorMode="Detailed" />
+
     <validation validateIntegratedModeConfiguration="false" />
     <modules>
       <add name="ImageResizingModule" type="ImageResizer.InterceptModule" />
     </modules>
-  </system.webServer></configuration>
+  </system.webServer>
+</configuration>
+<!--ProjectGuid: 1BD632F4-FE01-411D-8D3B-EBB17F0B7EF9-->

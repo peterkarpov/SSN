@@ -2,6 +2,7 @@
 {
     using Domain;
     using Domain.Entities;
+    using Infrastructure;
     using Ninject;
     using System;
     using System.Collections.Generic;
@@ -27,6 +28,7 @@
             return View(model);
         }
 
+        [ProfileAuth(Order = 1)]
         [Authorize]
         public ActionResult OnFriendsNews(Guid? ProfileId, string login = null)
         {
@@ -77,6 +79,7 @@
             return View(news);
         }
 
+        [ProfileAuth(Order = 1)]
         [Authorize]
         [HttpGet]
         public ActionResult CreateNews(Guid? ProfileId, string login = null)
@@ -98,6 +101,7 @@
             return View(News);
         }
 
+        [ProfileAuth(Order = 1)]
         [Authorize]
         [HttpPost]
         public ActionResult CreateNews(News News, string returnUrl)
@@ -122,6 +126,7 @@
             return View();
         }
 
+        [ProfileAuth(Order = 1)]
         [Authorize]
         public ActionResult DeleteNews(Guid NewsId, string returnUrl)
         {

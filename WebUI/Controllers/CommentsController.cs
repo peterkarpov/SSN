@@ -2,6 +2,7 @@
 {
     using Domain;
     using Domain.Entities;
+    using Infrastructure;
     using Ninject;
     using System;
     using System.Collections.Generic;
@@ -35,6 +36,7 @@
             return PartialView(model);
         }
 
+        [ProfileAuth(Order = 1)]
         [Authorize]
         public PartialViewResult AddComment(Guid TargetId)
         {
@@ -46,6 +48,7 @@
             return PartialView(newComment);
         }
 
+        [ProfileAuth(Order = 1)]
         [Authorize]
         [HttpPost]
         public ActionResult AddComment(Comment newComment, string returnUrl)
@@ -62,6 +65,7 @@
             return Redirect(returnUrl);
         }
 
+        [ProfileAuth(Order = 1)]
         [Authorize]
         [HttpPost]
         public void AjaxAddComment(Comment newComment, string returnUrl)

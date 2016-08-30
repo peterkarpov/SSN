@@ -34,6 +34,7 @@ namespace Domain.Entities
         public Guid? AvatarImageId { get; set; }
 
         [Display(Name = "Country")]
+        [Range(typeof(int), "0", "1")]
         public Country? country { get; set; } // EnumDropDownListFor
 
         [Display(Name = "Language")]
@@ -55,6 +56,7 @@ namespace Domain.Entities
         public string Annotation { get; set; } // TextAreaFor
 
         [Display(Name = "Relationship")]
+        [Range(typeof(int), "0", "2")]
         public RelationShipStatus? rStatus { get; set; } // DropDownListFor
 
         [Display(Name = "Show Email")]

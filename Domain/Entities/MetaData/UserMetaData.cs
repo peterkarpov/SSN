@@ -15,14 +15,18 @@ namespace Domain.Entities.MetaData
         
 
         [StringLength(50)]
+        [Required]
         public string login { get; set; }
         
 
         [StringLength(50)]
+        [Required]
+
         public string password { get; set; }
         
 
         [StringLength(50)]
+        [Required]
         public string email { get; set; }
 
 

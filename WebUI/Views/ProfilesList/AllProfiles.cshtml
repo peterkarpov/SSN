@@ -6,6 +6,11 @@
     ViewBag.Title = "AllProfiles";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
+    string controller = (string)ViewContext.Controller.ControllerContext.RouteData.Values["controller"];
+    string action = (string)ViewContext.Controller.ControllerContext.RouteData.Values["action"];
+
+
+
 }
 
 
@@ -34,7 +39,7 @@
 
         @*<h2>Filter</h2>*@
 
-        @using (Html.BeginForm("Filter", "ProfilesList", FormMethod.Get))
+        @using (Html.BeginForm("Filter", "ProfilesList", FormMethod.Post))
         {
             <div class="form-group">
 
@@ -83,6 +88,6 @@
 
 <div class="row">
     <div class="btn-group pull-right">
-        @Html.PageLinks(Model.PagingInfo, x => Url.Action("Index", new { page = x }))
+        @Html.PageLinks(Model.PagingInfo, x => Url.Action( "AllProfiles", "ProfilesList", new { page = x }))
     </div>
 </div>

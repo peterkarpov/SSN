@@ -6,7 +6,7 @@
 
     public class EFDbContext : DbContext
     {
-        public EFDbContext() : base("SSN") //SSN-myaspnet
+        public EFDbContext() : base("SSN") //DB_A0C61B_ssn
         //public EFDbContext() : base(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\A\Downloads\bp10\ESN.WebUI\App_Data\ESN3.mdf;Integrated Security=True")
         {
             // Установить новый инициализатор

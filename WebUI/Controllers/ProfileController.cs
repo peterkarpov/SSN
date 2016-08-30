@@ -117,13 +117,12 @@
             
             model.Profile = repository.Profiles.FirstOrDefault(p => p.ProfileId == ProfileId);
             model.User = repository.Users.Where(u => u.UserId == ProfileId)
-                .Select(u => new User
-                                    {
+                .Select(u => new User {
                                         UserId = u.UserId,
                                         email = u.email,
                                         login = login,
                                         role = u.role
-                                    }).First();
+                                      }).FirstOrDefault();
 
             ViewBag.FriendStatus = GetFriendStatus(ProfileId);
 

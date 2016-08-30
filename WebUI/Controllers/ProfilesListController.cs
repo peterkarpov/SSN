@@ -38,7 +38,7 @@
             return View(model);
         }
 
-        [HttpGet]
+        [HttpPost]
         public ViewResult Filter(SearchProfileListViewModel sProfile = default(SearchProfileListViewModel), int page = 1)
         {
             var profiles = repository.Profiles;

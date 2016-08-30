@@ -113,6 +113,8 @@
             return Redirect(returnUrl);
         }
 
+        [ProfileAuth(Order = 1)]
+        [Authorize]
         public ActionResult RemoveFromFriends(Guid? ProfileId, Guid? subscriberId, string returnUrl, string login = null, string subscriberlogin = null)
         {
             if (ProfileId == null)

@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Web.Mvc;
     using Domain;
+    using System.Configuration;
 
     public class ImageController : Controller
     {
@@ -39,7 +40,8 @@
             FileStream fs = default(FileStream);
             BinaryReader br = default(BinaryReader);
             byte[] img = default(byte[]);
-            string filePath = @"C:\Users\A\documents\visual studio 2015\Projects\SSN\WebUI\App_Data\camera_200.png";
+            string defaultFilePath = ConfigurationManager.AppSettings["rootPath"];
+            string filePath = defaultFilePath + @"\App_Data\camera_200.png";
 
             try
             {

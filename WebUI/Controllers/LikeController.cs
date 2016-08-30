@@ -2,6 +2,7 @@
 {
     using Domain;
     using Domain.Entities;
+    using Infrastructure;
     using Newtonsoft.Json;
     using Ninject;
     using System;
@@ -20,6 +21,7 @@
             repository = DependencyResolver.Current.GetService<IRepository>();
         }
 
+        [ProfileAuth(Order = 1)]
         [Authorize]
         [HttpGet]
         public void AjaxSetLike(string jsonData)
@@ -38,6 +40,7 @@
 
         }
 
+        [ProfileAuth(Order = 1)]
         [Authorize]
         public int AjaxGetLike(string jsonData)
         {
@@ -46,6 +49,7 @@
             return repository.Likes.Where(t => t.TargetId == TargetId).Count();
         }
 
+        [ProfileAuth(Order = 1)]
         [Authorize]
         [HttpGet]
         public void AjaxSetDislike(string jsonData)

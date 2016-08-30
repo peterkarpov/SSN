@@ -50,7 +50,8 @@
 
                 if (authProvider.Registrate(user))
                 {
-                    return Redirect(returnUrl ?? Url.Action("ShowOne", "Profile", new { login = user.login }));
+                    return SignIn(new AuthenticationViewModel { UserName = model.UserName, Password = model.Password }, returnUrl);
+                    //return Redirect(returnUrl ?? Url.Action("ShowOne", "Profile", new { login = user.login }));
                 }
                 else
                 {
@@ -155,6 +156,8 @@
 
         public JsonResult CheckUserName(string username)
         {
+            var a = Enum.GetValues(typeof(RelationShipStatus)).GetUpperBound(0).ToString();
+
             var result = repository.Users.Where(u => u.login == username).Count() == 0;
             //var result = Membership.FindUsersByName(username).Count == 0;
             return Json(result, JsonRequestBehavior.AllowGet);

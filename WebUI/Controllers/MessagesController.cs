@@ -7,6 +7,7 @@
     using System.Linq;
     using System.Web.Mvc;
     using Domain;
+    using Infrastructure;
 
     public class MessagesController : Controller
     {
@@ -74,6 +75,7 @@
 
         }
 
+        [ProfileAuth(Order = 1)]
         [Authorize]
         [HttpGet]
         public ActionResult SendMessage(Guid fromProfileId, Guid toProfileId)
@@ -88,6 +90,7 @@
             return View(message);
         }
 
+        [ProfileAuth(Order = 1)]
         [Authorize]
         [HttpGet]
         public PartialViewResult SendMessagePartial(Guid fromProfileId, Guid toProfileId)
@@ -102,6 +105,7 @@
             return PartialView(message);
         }
 
+        [ProfileAuth(Order = 1)]
         [Authorize]
         [HttpPost]
         public ActionResult SendMessage(Message message)
