@@ -11,7 +11,7 @@
         {
             // Установить новый инициализатор
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<EFDbContext>());
-            Database.SetInitializer(new DropCreateDatabaseAlways<EFDbContext>());
+            //Database.SetInitializer(new DropCreateDatabaseAlways<EFDbContext>());
             Database.SetInitializer(new SampleInitializer());
 
         }
