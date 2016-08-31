@@ -45,15 +45,18 @@
         {
             var profiles = repository.Profiles;
 
-            if (sProfile.fName != null) profiles = profiles.Where(f => f.fName != null ? f.fName.Contains(sProfile.fName) : false);
-            if (sProfile.lName != null) profiles = profiles.Where(l => l.lName != null ? l.lName.Contains(sProfile.lName) : false);
-            if (sProfile.mName != null) profiles = profiles.Where(m => m.mName != null ? m.mName.Contains(sProfile.mName) : false);
+            if (ModelState.IsValid)
+            {
+                if (sProfile.fName != null) profiles = profiles.Where(f => f.fName != null ? f.fName.Contains(sProfile.fName) : false);
+                if (sProfile.lName != null) profiles = profiles.Where(l => l.lName != null ? l.lName.Contains(sProfile.lName) : false);
+                if (sProfile.mName != null) profiles = profiles.Where(m => m.mName != null ? m.mName.Contains(sProfile.mName) : false);
 
-            // add day\mounth\year, add GetAge() on Profile Logic
-            if (sProfile.dob != null) profiles = profiles.Where(d => d.dob != null ? d.dob > sProfile.dob : false);
-            
-            if (sProfile.Gender != null) profiles = profiles.Where(g => g.Gender == sProfile.Gender);
-            
+                // add day\mounth\year, add GetAge() on Profile Logic
+                if (sProfile.dob != null) profiles = profiles.Where(d => d.dob != null ? d.dob > sProfile.dob : false);
+
+                if (sProfile.Gender != null) profiles = profiles.Where(g => g.Gender == sProfile.Gender);
+            }
+
             ProfilesListViewModel model = new ProfilesListViewModel
             {
                 sProfile = sProfile,

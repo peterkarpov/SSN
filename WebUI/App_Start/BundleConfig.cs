@@ -1,15 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Optimization;
 
 namespace WebUI.App_Start
 {
+  
     public class BundleConfig
     {
+        
+
+
+
         public static void RegisterBundles(BundleCollection bundles)
         {
+            //bundles.UseCdn = true;
+
+            //string rootPath = ConfigurationManager.AppSettings["rootPath"].Replace('\\', '/');
+
+            //rootPath = @"D://run.js".Replace('\\', '/');
+
+            //bundles.Add(new ScriptBundle("~/run", rootPath).Include(
+            //            "~/run.js"));
+
+
+
+
+
+
+
+
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-1.*"));
 
@@ -51,8 +74,8 @@ namespace WebUI.App_Start
             bundles.Add(new ScriptBundle("~/js/jquery.Jcrop.min.js").Include(
                         "~/js/jquery.Jcrop.min.js"));
 
-            bundles.Add(new StyleBundle("~/css/jquery.Jcrop.min.css")
-                   .Include("~/css/jquery.Jcrop.min.css"));
+            bundles.Add(new StyleBundle("~/css/jquery.Jcrop.css")
+                   .Include("~/css/jquery.Jcrop.css"));
 
             //jsdelivr for DateTime EditorTemplates
 

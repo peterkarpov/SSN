@@ -12,12 +12,15 @@ namespace WebUI.Models
     {
 
         [Display(Name = "First Name")]
+        [RegularExpression(@"[A-Za-z0-9]+")]
         [StringLength(50)]
         public string fName { get; set; }
         [StringLength(50)]
+        [RegularExpression(@"[A-Za-z0-9]+")]
         [Display(Name = "Last Name")]
         public string lName { get; set; }
         [StringLength(50)]
+        [RegularExpression(@"[A-Za-z0-9]+")]
         [Display(Name = "Middle Name")]
         public string mName { get; set; }
         [Display(Name = "Gender")]
